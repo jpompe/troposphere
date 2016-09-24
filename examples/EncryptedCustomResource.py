@@ -214,7 +214,8 @@ def add_encrypted_params(template, N=1, names=None):
             "Encrypted{}".format(encrypted_param_name),
             ServiceToken=GetAtt("CloudFormationKMSResourceLambdaFunction", "Arn"),
             KeyId=Ref(encrypted_param_name),
-            PlainText=(Ref(SecretParameter))
+            PlainText=(Ref(SecretParameter)),
+            DependsOn='{}KMSKey'.format(encrypted_param_name)
         ))
 
         KMSKeyArn = t.add_output(Output(

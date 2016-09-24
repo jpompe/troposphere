@@ -165,6 +165,7 @@
             "Type": "AWS::Lambda::Function"
         },
         "Encryptedfoo": {
+            "DependsOn": "fooKMSKey",
             "Properties": {
                 "KeyId": {
                     "Ref": "foo"
@@ -182,6 +183,7 @@
             "Type": "AWS::CloudFormation::CustomResource"
         },
         "Encryptedpa7227word": {
+            "DependsOn": "pa7227wordKMSKey",
             "Properties": {
                 "KeyId": {
                     "Ref": "pa7227word"
@@ -199,6 +201,7 @@
             "Type": "AWS::CloudFormation::CustomResource"
         },
         "Encryptedpassword": {
+            "DependsOn": "passwordKMSKey",
             "Properties": {
                 "KeyId": {
                     "Ref": "password"
