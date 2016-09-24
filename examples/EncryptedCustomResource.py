@@ -211,7 +211,7 @@ def add_encrypted_params(template, N=1, names=None):
         ))
 
         EncryptedCustomResource = t.add_resource(EncryptedCustomResourceObject(
-            "{}".format(encrypted_param_name),
+            "Encrypted{}".format(encrypted_param_name),
             ServiceToken=GetAtt("CloudFormationKMSResourceLambdaFunction", "Arn"),
             KeyId=Ref(encrypted_param_name),
             PlainText=(Ref(SecretParameter))
@@ -225,7 +225,7 @@ def add_encrypted_params(template, N=1, names=None):
         EncryptedCustomResourceCipherText = t.add_output(Output(
             "{}CipherText".format(encrypted_param_name),
             Value=GetAtt(
-                "{}".format(encrypted_param_name),
+                "Encrypted{}".format(encrypted_param_name),
                 "CipherText"
             ),
             Description="KMS encrypted value of {} (Base64 encoded)".format(
