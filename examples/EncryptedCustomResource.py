@@ -29,11 +29,7 @@ class EncryptedCustomResourceObject(AWSCustomObject):
         'PlainText': (basestring, True)
     }
 
-<<<<<<< HEAD
 def add_encrypted_params(template, N=1, names=None):
-=======
-def add_encrypted_params(template, N=1):
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
     """ add N encrypted params to template """
 
     LambdaExecutionRole = t.add_resource(Role(
@@ -161,7 +157,6 @@ def add_encrypted_params(template, N=1):
     ))
 
     for encrypted_param_num in xrange(N):
-<<<<<<< HEAD
         if names:
             if names[0] == '[' and names[-1] == ']':
                 encrypted_param_name = names[1:-2].split()[encrypted_param_num]
@@ -175,20 +170,12 @@ def add_encrypted_params(template, N=1):
 
         SecretParameter = t.add_parameter(Parameter(
             encrypted_param_name,
-=======
-        SecretParameter = t.add_parameter(Parameter(
-            "SecretParameter{}".format(encrypted_param_num),
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
             Type="String",
             NoEcho=True
         ))
 
         KMSKey = t.add_resource(Key(
-<<<<<<< HEAD
             '{}KMSKey'.format(encrypted_param_name),
-=======
-            "KMSKey{}".format(encrypted_param_num),
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
             Description="Lambda backed cloudformation KMS encryption custom "\
                 "resource encryption master key",
             Enabled=True,
@@ -224,20 +211,13 @@ def add_encrypted_params(template, N=1):
         ))
 
         EncryptedCustomResource = t.add_resource(EncryptedCustomResourceObject(
-<<<<<<< HEAD
             "{}".format(encrypted_param_name),
             ServiceToken=GetAtt("CloudFormationKMSResourceLambdaFunction", "Arn"),
             KeyId=Ref(encrypted_param_name),
-=======
-            "EncryptedCustomResource{}".format(encrypted_param_num),
-            ServiceToken=GetAtt("CloudFormationKMSResourceLambdaFunction", "Arn"),
-            KeyId=Ref("KMSKey{}".format(encrypted_param_num)),
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
             PlainText=(Ref(SecretParameter))
         ))
 
         KMSKeyArn = t.add_output(Output(
-<<<<<<< HEAD
             "{}KmsKeyArn".format(encrypted_param_name),
             Value=GetAtt("{}KMSKey".format(encrypted_param_name), "Arn")
         ))
@@ -251,19 +231,6 @@ def add_encrypted_params(template, N=1):
             Description="KMS encrypted value of {} (Base64 encoded)".format(
                 encrypted_param_name
             )
-=======
-            "KmsKey{}Arn".format(encrypted_param_num),
-            Value=GetAtt("KMSKey{}".format(encrypted_param_num), "Arn")
-        ))
-
-        EncryptedCustomResourceCipherText = t.add_output(Output(
-            "EncryptedCustomResource{}CipherText".format(encrypted_param_num),
-            Value=GetAtt(
-                "EncryptedCustomResource{}".format(encrypted_param_num),
-                "CipherText"
-            ),
-            Description="KMS encrypted value of SecretParameter (Base64 encoded)"
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
         ))
 
 
@@ -282,7 +249,6 @@ if __name__ == '__main__':
         choices=xrange(1, 51)
     )
 
-<<<<<<< HEAD
     parser.add_argument(
         '--param_names',
         '-n',
@@ -292,11 +258,6 @@ if __name__ == '__main__':
     )
 
     args = parser.parse_args()
-=======
-    args = parser.parse_args()
-
-    num_secret_params = args.num_sercret_params
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
 
     t = Template()
 
@@ -310,10 +271,6 @@ if __name__ == '__main__':
         "formation-kms-encryption"
     )
 
-<<<<<<< HEAD
     add_encrypted_params(t, args.num_sercret_params, args.param_names)
-=======
-    add_encrypted_params(t, num_secret_params)
->>>>>>> 54c5663966978d709d288b4e37f61d41cfaf258f
 
     print(t.to_json())
