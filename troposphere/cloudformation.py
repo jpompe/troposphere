@@ -23,6 +23,7 @@ class AWSCustomObject(BaseAWSObject):
     dictname = 'Properties'
 
 
+# if you actually want to define a custom resource you extend AWSCustomObject
 class CustomResource(AWSCustomObject):
     resource_type = "AWS::CloudFormation::CustomResource"
 
