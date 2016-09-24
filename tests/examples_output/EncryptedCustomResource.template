@@ -168,7 +168,7 @@
             "DependsOn": "fooKMSKey",
             "Properties": {
                 "KeyId": {
-                    "Ref": "foo"
+                    "Ref": "fooKMSKey"
                 },
                 "PlainText": {
                     "Ref": "foo"
@@ -186,7 +186,7 @@
             "DependsOn": "pa7227wordKMSKey",
             "Properties": {
                 "KeyId": {
-                    "Ref": "pa7227word"
+                    "Ref": "pa7227wordKMSKey"
                 },
                 "PlainText": {
                     "Ref": "pa7227word"
@@ -204,7 +204,7 @@
             "DependsOn": "passwordKMSKey",
             "Properties": {
                 "KeyId": {
-                    "Ref": "password"
+                    "Ref": "passwordKMSKey"
                 },
                 "PlainText": {
                     "Ref": "password"
