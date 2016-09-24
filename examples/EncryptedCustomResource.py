@@ -159,7 +159,7 @@ def add_encrypted_params(template, N=1, names=None):
     for encrypted_param_num in xrange(N):
         if names:
             if names[0] == '[' and names[-1] == ']':
-                encrypted_param_name = names[1:-2].split()[encrypted_param_num]
+                encrypted_param_name = names[1:-1].split()[encrypted_param_num]
             else:
                 encrypted_param_name = '{}{}'.format(
                     names,
@@ -182,7 +182,7 @@ def add_encrypted_params(template, N=1, names=None):
             EnableKeyRotation=True,
             KeyPolicy=Policy(
                 Version="2012-10-17",
-                Id="key-default-1",
+                Id="{}-key-default-1".format(encrypted_param_name),
                 Statement=[
                     Statement(
                         Sid="Enable IAM User Permissions",
