@@ -1,0 +1,51 @@
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: create cloudformation template
+      EncryptedCustomResource:
+        N: 3
+        names: "[password pa7227word pa7227w0rd]"
+      register: encrypted_custom_resource_template
+    - name: create temp file
+      shell: mktemp
+      register: tmp_file
+    - name: save encrypted custom resource template to temp file
+      local_action:
+        copy content="{{ encrypted_custom_resource_template.meta }}"
+        dest="{{ tmp_file.stdout }}"
+      register: tmp_template_file
+    - name: launch ansible encrypted cloudformation parameter example
+      cloudformation:
+        stack_name: "ansible-encrypted-cloudformation"
+        state: "present"
+        region: "us-west-2"
+        disable_rollback: true
+        template: "{{ tmp_file.stdout }}"
+        template_parameters:
+          password: "{{ password }}"
+          pa7227word: "{{ pa7227word }}"
+          pa7227w0rd: "{{ pa7227w0rd }}"
+        tags:
+          Stack: "ansible-encrypted-cloudformation"
+    - name: delete temp file
+      file: name="{{ tmp_file.stdout }}" state=absent
+  vars_prompt:
+    - name: "password"
+      prompt: "enter your password: "
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 16
+    - name: "pa7227word"
+      prompt: "enter your pa7227word: "
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 16
+    - name: "pa7227w0rd"
+      prompt: "enter your pa7227w0rd: "
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 16
