@@ -139,7 +139,7 @@ def add_encrypted_params(template, N=1, names=None):
         "",
         "    except Exception as E:",
         "        response['Status'] = 'FAILED'",
-        "        response['Reason'] = 'UnhandledException: {}, check cloudwatch logs'.format(E)",
+        "        response['Reason'] = 'UnhandledException, check cloudwatch logs'",
         "",
         "    return send_response(event, response)"
     ]

@@ -1,19 +1,19 @@
 {
     "Description": "Example template showing Demonstration of encryption using KMS in a CloudFormation Template. For information on AWS Lambda-backed Custom Resources see:http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources-lambda.html Inspired by https://github.com/RealSalmon/lambda-backed-cloud-formation-kms-encryption",
     "Outputs": {
-        "fooCipherText": {
-            "Description": "KMS encrypted value of foo (Base64 encoded)",
+        "pa7227w0rdCipherText": {
+            "Description": "KMS encrypted value of pa7227w0rd (Base64 encoded)",
             "Value": {
                 "Fn::GetAtt": [
-                    "Encryptedfoo",
+                    "Encryptedpa7227w0rd",
                     "CipherText"
                 ]
             }
         },
-        "fooKmsKeyArn": {
+        "pa7227w0rdKmsKeyArn": {
             "Value": {
                 "Fn::GetAtt": [
-                    "fooKMSKey",
+                    "pa7227w0rdKMSKey",
                     "Arn"
                 ]
             }
@@ -54,7 +54,7 @@
         }
     },
     "Parameters": {
-        "foo": {
+        "pa7227w0rd": {
             "NoEcho": true,
             "Type": "String"
         },
@@ -145,7 +145,7 @@
                                 "",
                                 "    except Exception as E:",
                                 "        response['Status'] = 'FAILED'",
-                                "        response['Reason'] = 'UnhandledException: {}, check cloudwatch logs'.format(E)",
+                                "        response['Reason'] = 'UnhandledException, check cloudwatch logs'",
                                 "",
                                 "    return send_response(event, response)"
                             ]
@@ -164,14 +164,13 @@
             },
             "Type": "AWS::Lambda::Function"
         },
-        "Encryptedfoo": {
-            "DependsOn": "fooKMSKey",
+        "Encryptedpa7227w0rd": {
             "Properties": {
                 "KeyId": {
-                    "Ref": "fooKMSKey"
+                    "Ref": "pa7227w0rdKMSKey"
                 },
                 "PlainText": {
-                    "Ref": "foo"
+                    "Ref": "pa7227w0rd"
                 },
                 "ServiceToken": {
                     "Fn::GetAtt": [
@@ -183,7 +182,6 @@
             "Type": "AWS::CloudFormation::CustomResource"
         },
         "Encryptedpa7227word": {
-            "DependsOn": "pa7227wordKMSKey",
             "Properties": {
                 "KeyId": {
                     "Ref": "pa7227wordKMSKey"
@@ -201,7 +199,6 @@
             "Type": "AWS::CloudFormation::CustomResource"
         },
         "Encryptedpassword": {
-            "DependsOn": "passwordKMSKey",
             "Properties": {
                 "KeyId": {
                     "Ref": "passwordKMSKey"
@@ -259,13 +256,13 @@
             },
             "Type": "AWS::IAM::Role"
         },
-        "fooKMSKey": {
+        "pa7227w0rdKMSKey": {
             "Properties": {
                 "Description": "Lambda backed cloudformation KMS encryption custom resource encryption master key",
                 "EnableKeyRotation": "true",
                 "Enabled": "true",
                 "KeyPolicy": {
-                    "Id": "foo-key-default-1",
+                    "Id": "pa7227w0rd-key-default-1",
                     "Statement": [
                         {
                             "Action": [
